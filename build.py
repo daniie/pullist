@@ -13,6 +13,7 @@ ROOT = Path(__file__).parent
 OUT = ROOT / "site"
 SITE_NAME = "pullist"
 TAGLINE = "Firewall openings needed to pull container images."
+SITE_URL = "https://pullist.d0t.se"
 
 PAGE = """<!doctype html>
 <html lang="en">
@@ -110,7 +111,7 @@ JSON: <a href="{slug}.json">{slug}.json</a> &middot;
 connectivity test: <a href="check-{slug}.sh">check-{slug}.sh</a></p>
 <pre>{esc(plain_list(p))}</pre>
 <h2>Verify from inside the network</h2>
-<pre>curl -fsSL https://YOUR-SITE/check-{slug}.sh | sh</pre>
+<pre>curl -fsSL {SITE_URL}/check-{slug}.sh | sh</pre>
 <h2>Sources</h2>
 <ul>{sources}</ul>
 <p class="meta">Last verified: {esc(p.get("last_verified", "unknown"))} &middot; data file: data/{esc(p["_file"])}</p>
