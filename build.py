@@ -14,6 +14,7 @@ OUT = ROOT / "site"
 SITE_NAME = "pullist"
 TAGLINE = "Firewall openings needed to pull container images."
 SITE_URL = "https://pullist.d0t.se"
+REPO_URL = "https://github.com/daniie/pullist"
 
 PAGE = """<!doctype html>
 <html lang="en">
@@ -28,7 +29,7 @@ PAGE = """<!doctype html>
 <main>
 {body}
 </main>
-<footer>Generated {today} &middot; data lives in plain YAML &middot; corrections welcome via pull request</footer>
+<footer>Generated {today} &middot; data lives in plain YAML &middot; corrections welcome via <a href="{repo}">pull request</a></footer>
 </body>
 </html>"""
 
@@ -117,7 +118,7 @@ connectivity test: <a href="check-{slug}.sh">check-{slug}.sh</a></p>
 <p class="meta">Last verified: {esc(p.get("last_verified", "unknown"))} &middot; data file: data/{esc(p["_file"])}</p>
 """
     return PAGE.format(title=esc(p["title"]), site=SITE_NAME, tagline=TAGLINE,
-                       body=body, today=datetime.date.today())
+                       body=body, today=datetime.date.today(), repo=REPO_URL)
 
 
 def index_page(products):
