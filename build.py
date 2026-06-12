@@ -138,7 +138,7 @@ with sources and a test script.</p>
 </table>
 """
     return PAGE.format(title="index", site=SITE_NAME, tagline=TAGLINE,
-                       body=body, today=datetime.date.today())
+                       body=body, today=datetime.date.today(), repo=REPO_URL)
 
 
 CSS = """
