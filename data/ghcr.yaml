@@ -1,0 +1,19 @@
+title: GitHub (ghcr.io)
+slug: ghcr
+description: GitHub Container Registry. Two hosts, both required.
+hosts:
+  - host: ghcr.io
+    ports: [443]
+    purpose: Registry API and token authentication
+    required: true
+  - host: pkg-containers.githubusercontent.com
+    ports: [443]
+    purpose: Blob storage (redirect target for layer downloads)
+    required: true
+notes: |
+  Auth tokens come from ghcr.io itself, but layer downloads redirect to
+  pkg-containers.githubusercontent.com. With only ghcr.io open, pulls
+  authenticate fine and then stall on the first layer.
+sources:
+  - https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+last_verified: 2026-06-12

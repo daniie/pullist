@@ -1,0 +1,59 @@
+title: Red Hat (registry.redhat.io)
+slug: redhat
+description: Red Hat container registries, used by RHEL, OpenShift operators and all Red Hat products. Blobs redirect to the Quay CDN.
+hosts:
+  - host: registry.redhat.io
+    ports: [443]
+    purpose: Authenticated registry (manifests, auth, blob requests)
+    required: true
+  - host: registry.access.redhat.com
+    ports: [443]
+    purpose: Unauthenticated legacy registry (UBI and older paths)
+    required: true
+  - host: registry.connect.redhat.com
+    ports: [443]
+    purpose: Partner / certified third-party images
+    required: false
+  - host: sso.redhat.com
+    ports: [443]
+    purpose: Authentication for registry.redhat.io
+    required: true
+  - host: cdn.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn01.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn02.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn03.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn04.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target, added 2025)
+    required: true
+  - host: cdn05.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target, added 2025)
+    required: true
+  - host: cdn06.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target, added 2025)
+    required: true
+notes: |
+  The Red Hat registries answer blob requests with an HTTP 302 redirect to a
+  short-lived signed URL on the Quay CDN hosts. If cdn01-06.quay.io are not
+  open, manifest pulls succeed but image config / layer downloads fail with
+  "connection refused" or i/o timeout (ImagePullBackOff in OpenShift).
+  Red Hat recommends hostname-based rules, not IP-based - the IPs are not
+  static. cdn04-06.quay.io were added in 2025 and are a common gap in
+  allowlists created before that.
+sources:
+  - https://access.redhat.com/articles/7084334
+last_verified: 2026-06-12

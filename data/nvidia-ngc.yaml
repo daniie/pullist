@@ -1,0 +1,25 @@
+title: NVIDIA NGC (nvcr.io)
+slug: nvidia-ngc
+description: NVIDIA's registry for GPU Operator, CUDA, Triton, NIM and other GPU images.
+hosts:
+  - host: nvcr.io
+    ports: [443]
+    purpose: Registry API (manifests and blobs)
+    required: true
+  - host: authn.nvidia.com
+    ports: [443]
+    purpose: Token authentication for nvcr.io
+    required: true
+  - host: api.ngc.nvidia.com
+    ports: [443]
+    purpose: NGC catalog API (used by the ngc CLI, not by plain pulls)
+    required: false
+notes: |
+  For a working GPU node you typically also need the NVIDIA driver
+  repositories (developer.download.nvidia.com) opened for the host OS or the
+  driver container - that is a package repo, not a registry, but it fails in
+  the same change window. Authenticated pulls (NIM, enterprise images) use an
+  API key as password against authn.nvidia.com.
+sources:
+  - https://docs.nvidia.com/ngc/latest/
+last_verified: 2026-06-12

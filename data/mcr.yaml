@@ -1,0 +1,21 @@
+title: Microsoft (mcr.microsoft.com)
+slug: mcr
+description: Microsoft Artifact Registry - dotnet, SQL Server, AKS components, Windows base images.
+hosts:
+  - host: mcr.microsoft.com
+    ports: [443]
+    purpose: Registry API (manifests, blob requests)
+    required: true
+  - host: "*.data.mcr.microsoft.com"
+    test_host: eastus.data.mcr.microsoft.com
+    ports: [443]
+    purpose: Regional CDN data endpoints (redirect targets for layers)
+    required: true
+notes: |
+  Layer content comes from regional data endpoints like
+  eastus.data.mcr.microsoft.com or westeurope.data.mcr.microsoft.com. If the
+  firewall cannot do wildcards, Microsoft publishes the regional endpoint
+  list in the mcr-firewall-rules documentation.
+sources:
+  - https://github.com/microsoft/containerregistry/blob/main/docs/client-firewall-rules.md
+last_verified: 2026-06-12

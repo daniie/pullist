@@ -1,0 +1,33 @@
+title: Docker Hub
+slug: docker-hub
+description: Default registry for docker/podman. Pulls touch three hosts minimum.
+hosts:
+  - host: registry-1.docker.io
+    ports: [443]
+    purpose: Registry API (manifests, blob requests)
+    required: true
+  - host: auth.docker.io
+    ports: [443]
+    purpose: Token authentication
+    required: true
+  - host: production.cloudflare.docker.com
+    ports: [443]
+    purpose: Blob CDN (redirect target for layer downloads)
+    required: true
+  - host: index.docker.io
+    ports: [443]
+    purpose: Legacy index, used by some older clients
+    required: false
+  - host: hub.docker.com
+    ports: [443]
+    purpose: Web UI and Hub API (search, browsing) - not needed for pulls
+    required: false
+notes: |
+  The classic failure mode: registry-1.docker.io and auth.docker.io are open,
+  so authentication and manifest fetch succeed, but layer downloads hang or
+  fail because production.cloudflare.docker.com is blocked. Layer downloads
+  are HTTP 307 redirects to the Cloudflare CDN.
+sources:
+  - https://docs.docker.com/desktop/setup/allow-list/
+  - https://support.sonatype.com/hc/en-us/articles/115015442847
+last_verified: 2026-06-12

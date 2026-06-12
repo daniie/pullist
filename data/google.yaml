@@ -1,0 +1,34 @@
+title: Google (gcr.io / Artifact Registry)
+slug: google
+description: Google Container Registry (legacy) and Artifact Registry (*.pkg.dev).
+hosts:
+  - host: gcr.io
+    ports: [443]
+    purpose: Legacy Container Registry API
+    required: true
+  - host: "*.gcr.io"
+    test_host: us.gcr.io
+    ports: [443]
+    purpose: Regional GCR mirrors (us.gcr.io, eu.gcr.io, asia.gcr.io, k8s.gcr.io)
+    required: true
+  - host: "*.pkg.dev"
+    test_host: us-docker.pkg.dev
+    ports: [443]
+    purpose: Artifact Registry (regional, e.g. us-docker.pkg.dev, europe-north1-docker.pkg.dev)
+    required: true
+  - host: storage.googleapis.com
+    ports: [443]
+    purpose: Blob storage (redirect target for GCR layer downloads)
+    required: true
+  - host: oauth2.googleapis.com
+    ports: [443]
+    purpose: Authentication (private repositories only)
+    required: false
+notes: |
+  GCR redirects layer downloads to storage.googleapis.com - the most commonly
+  missed host. Artifact Registry (*.pkg.dev) serves blobs from the registry
+  hostname itself, so it is simpler to allowlist; if the firewall cannot do
+  wildcards, open the specific regional endpoints in use.
+sources:
+  - https://cloud.google.com/artifact-registry/docs/securing-with-vpc-sc
+last_verified: 2026-06-12

@@ -1,0 +1,43 @@
+title: Quay.io
+slug: quay
+description: Red Hat's public registry. Hosts most OpenShift platform images and many open source projects.
+hosts:
+  - host: quay.io
+    ports: [443]
+    purpose: Registry API and token authentication
+    required: true
+  - host: cdn.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn01.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn02.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn03.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target)
+    required: true
+  - host: cdn04.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target, added 2025)
+    required: true
+  - host: cdn05.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target, added 2025)
+    required: true
+  - host: cdn06.quay.io
+    ports: [80, 443]
+    purpose: Blob CDN (redirect target, added 2025)
+    required: true
+notes: |
+  Blob content cannot be fetched from the CDN hosts directly - the registry
+  issues short-lived signed redirect URLs. Open the hostnames, do not try to
+  pin IP addresses.
+sources:
+  - https://access.redhat.com/articles/7084334
+last_verified: 2026-06-12

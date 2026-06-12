@@ -1,0 +1,29 @@
+title: Kubernetes (registry.k8s.io)
+slug: registry-k8s-io
+description: The Kubernetes project registry - a redirector in front of cloud-regional backends.
+hosts:
+  - host: registry.k8s.io
+    ports: [443]
+    purpose: Front-end redirector (manifests, redirect responses)
+    required: true
+  - host: "*.pkg.dev"
+    test_host: us-west1-docker.pkg.dev
+    ports: [443]
+    purpose: Google Artifact Registry backends (redirect targets)
+    required: true
+  - host: "*.amazonaws.com"
+    test_host: prod-registry-k8s-io-us-east-1.s3.dualstack.us-east-1.amazonaws.com
+    ports: [443]
+    purpose: AWS S3 blob backends (redirect targets, regional buckets)
+    required: true
+notes: |
+  registry.k8s.io is explicitly designed to redirect to the nearest backend,
+  and the project states the set of backends can change at any time without
+  notice. Hostname allowlists need broad rules (*.pkg.dev plus the regional
+  prod-registry-k8s-io-* S3 buckets). For strict environments the upstream
+  recommendation is: do not allowlist this registry at all - mirror the
+  images into your own registry instead.
+sources:
+  - https://kubernetes.io/blog/2023/03/10/image-registry-redirect/
+  - https://github.com/kubernetes/registry.k8s.io
+last_verified: 2026-06-12
