@@ -1,0 +1,68 @@
+title: Hugging Face Hub
+slug: hugging-face
+description: Model, dataset, and artifact downloads from Hugging Face Hub.
+hosts:
+  - host: huggingface.co
+    ports: [443]
+    purpose: Hub API, repository metadata, authentication, download URL resolution
+    required: true
+
+  - host: hf.co
+    ports: [443]
+    purpose: Short URLs and download redirects
+    required: false
+
+  - host: cdn-lfs.hf.co
+    ports: [443]
+    purpose: Git LFS CDN for large file downloads
+    required: true
+
+  - host: cdn-lfs-us-1.hf.co
+    ports: [443]
+    purpose: Regional Git LFS CDN (US)
+    required: true
+
+  - host: cdn-lfs-eu-1.hf.co
+    ports: [443]
+    purpose: Regional Git LFS CDN (EU)
+    required: true
+
+  - host: cas-bridge.xethub.hf.co
+    ports: [443]
+    purpose: Xet storage bridge used by many newer repositories
+    required: true
+
+  - host: transfer.xethub.hf.co
+    ports: [443]
+    purpose: Xet blob transfer endpoint
+    required: true
+
+  - host: cas-server.xethub.hf.co
+    ports: [443]
+    purpose: Xet content-addressable storage API
+    required: true
+
+notes: |
+  Hugging Face downloads often begin at huggingface.co but are redirected
+  to dedicated CDN or Xet storage endpoints for large files.
+
+  Common failure mode:
+  - huggingface.co is reachable
+  - repository metadata and model listings work
+  - downloads stall or fail because CDN/Xet hosts are blocked
+
+  Since Hugging Face has migrated many repositories to the Xet storage
+  backend, allowing only huggingface.co is no longer sufficient.
+
+  Some environments may observe redirects to provider-managed CDN domains
+  (for example CloudFront-backed endpoints). If downloads still fail after
+  allowing the hosts above, inspect HTTP redirects from a failing download
+  and whitelist any additional CDN hosts returned by your specific model
+  repositories.
+
+sources:
+  - https://huggingface.co/docs/xet/download-protocol
+  - https://discuss.huggingface.co/t/how-to-get-a-list-of-all-huggingface-download-redirections-to-whitelist/30486
+  - https://docs.cloudera.com/machine-learning/1.5.5/model-hub/topics/ml-model-hub-air-gap-installation.html
+
+last_verified: 2026-06-17
