@@ -1,0 +1,29 @@
+title: Get K3S
+slug: get-k3s
+description: Endpoints needed to be able to install K3S with script from get.k3s.io
+hosts:
+  - host: get.k3s.io
+    ports: [443]
+    purpose: The location of the install script
+    required: true
+  - host: github.com
+    ports: [443]
+    purpose: K3s release artifacts download
+    required: true
+  - host: update.k3s.io
+    ports: [443]
+    purpose: Channel URL for fetching k3s download URL
+    required: true
+  - host: api.github.com
+    ports: [443]
+    purpose: Fetching k3s versions
+    required: true
+  - host: rpm.rancher.io
+    ports: [443]
+    purpose: rpm repository for K3S SELinux packages
+    required: true
+notes: ""
+sources:
+  - https://get.k3s.io
+last_verified: 2026-09-18
+ 
