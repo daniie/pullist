@@ -42,6 +42,7 @@ description: GitHub Container Registry. Two hosts, both required.
 hosts:
   - host: ghcr.io
     ports: [443]
+    protocol: https  # optional, http if port is 80 otherwise https
     purpose: Registry API and token authentication
     required: true
   - host: "*.data.example.com"      # wildcards are fine, but then set:
